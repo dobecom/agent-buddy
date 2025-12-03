@@ -20,11 +20,29 @@
     "test:e2e": "jest --config ./apps/agent-buddy/test/jest-e2e.json"
   },
   "dependencies": {
+    "@js-joda/core": "^5.6.5",
+    "@nestjs/axios": "^4.0.1",
     "@nestjs/common": "^11.0.1",
+    "@nestjs/config": "^4.0.2",
     "@nestjs/core": "^11.0.1",
+    "@nestjs/jwt": "^11.0.1",
+    "@nestjs/microservices": "^11.1.9",
+    "@nestjs/passport": "^11.0.5",
     "@nestjs/platform-express": "^11.0.1",
+    "@nestjs/typeorm": "^11.0.0",
+    "@songkeys/nestjs-redis": "^11.0.0",
+    "amqp-connection-manager": "^5.0.0",
+    "amqplib": "^0.10.9",
+    "crypto-js": "^4.2.0",
+    "joi": "^18.0.2",
+    "nanoid": "^5.1.6",
+    "nestjs-cls": "^6.1.0",
+    "nodemailer": "^7.0.11",
+    "passport-jwt": "^4.0.1",
+    "pg": "^8.16.3",
     "reflect-metadata": "^0.2.2",
-    "rxjs": "^7.8.1"
+    "rxjs": "^7.8.1",
+    "tunnel": "^0.0.6"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.2.0",

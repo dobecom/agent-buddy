@@ -1,0 +1,7 @@
+export enum CaseMessage {
+  // CASE
+  CASE_REGISTER = 'CASE_REGISTER',
+  CASE_RENEW = 'CASE_RENEW',
+  CASE_LIST = 'CASE_LIST',
+  CASE_VIEW = 'CASE_VIEW',
+}
