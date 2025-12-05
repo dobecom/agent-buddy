@@ -1,15 +1,25 @@
 
-export class CaseAttachmentsEntity {
+export class CaseAttachesEntity {
   id: string;
-  caseId: string;
+  url: string;
   path: string;
   name: string;
-  originalName: string;
+  original: string;
   memo: string | null;
+  // WAIT / VERIFY / DELETE
+  status: string;
   createdAt: string;
   createdBy: string | null;
   updatedAt: string;
   updatedBy: string | null;
+}
+
+export class CaseAttachesREntity {
+  caseId: string;
+  attachId: string;
+  seq: number;
+  // BROWSER / WEBAPPS
+  type: string;
 }
 
 export class CaseResolutionsEntity {

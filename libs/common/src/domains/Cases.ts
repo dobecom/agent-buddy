@@ -16,9 +16,9 @@ export class Cases extends CasesEntity {
   static readonly limit = 10;
   page: number;
 
-  caseStatementsIdList: number[];
-  caseAttachmentsIdList: number[];
-  caseResolutionsIdList: number[];
+  statementIdList: string[];
+  attachIdList: string[];
+  resolutionIdList: string[];
 
   constructor() {
     super();

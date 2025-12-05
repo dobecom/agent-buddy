@@ -33,6 +33,7 @@
     "@songkeys/nestjs-redis": "^11.0.0",
     "amqp-connection-manager": "^5.0.0",
     "amqplib": "^0.10.9",
+    "class-validator": "^0.14.3",
     "crypto-js": "^4.2.0",
     "joi": "^18.0.2",
     "nanoid": "^5.1.6",
@@ -42,7 +43,8 @@
     "pg": "^8.16.3",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1",
-    "tunnel": "^0.0.6"
+    "tunnel": "^0.0.6",
+    "typeorm": "^0.3.28"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.2.0",

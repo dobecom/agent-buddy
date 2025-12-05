@@ -10,6 +10,24 @@
   "monorepo": true,
   "root": "apps/user",
   "projects": {
+    "analyzing-agent": {
+      "type": "application",
+      "root": "apps/analyzing-agent",
+      "entryFile": "main",
+      "sourceRoot": "apps/analyzing-agent/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/analyzing-agent/tsconfig.app.json"
+      }
+    },
+    "api": {
+      "type": "application",
+      "root": "apps/api",
+      "entryFile": "main",
+      "sourceRoot": "apps/api/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/api/tsconfig.app.json"
+      }
+    },
     "case": {
       "type": "application",
       "root": "apps/case",
@@ -17,6 +35,15 @@
       "sourceRoot": "apps/case/src",
       "compilerOptions": {
         "tsConfigPath": "apps/case/tsconfig.app.json"
+      }
+    },
+    "closing-agent": {
+      "type": "application",
+      "root": "apps/closing-agent",
+      "entryFile": "main",
+      "sourceRoot": "apps/closing-agent/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/closing-agent/tsconfig.app.json"
       }
     },
     "common": {
@@ -35,6 +62,33 @@
       "sourceRoot": "apps/gateway/src",
       "compilerOptions": {
         "tsConfigPath": "apps/gateway/tsconfig.app.json"
+      }
+    },
+    "intake-agent": {
+      "type": "application",
+      "root": "apps/intake-agent",
+      "entryFile": "main",
+      "sourceRoot": "apps/intake-agent/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/intake-agent/tsconfig.app.json"
+      }
+    },
+    "processing-agent": {
+      "type": "application",
+      "root": "apps/processing-agent",
+      "entryFile": "main",
+      "sourceRoot": "apps/processing-agent/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/processing-agent/tsconfig.app.json"
+      }
+    },
+    "scoping-agent": {
+      "type": "application",
+      "root": "apps/scoping-agent",
+      "entryFile": "main",
+      "sourceRoot": "apps/scoping-agent/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/scoping-agent/tsconfig.app.json"
       }
     },
     "user": {
