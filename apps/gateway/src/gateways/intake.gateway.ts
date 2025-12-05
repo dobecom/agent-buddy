@@ -6,7 +6,7 @@ import { Users } from '@app/common/domains/Users';
 import { SignAuthGuard } from '@app/common/guards/sign.auth.guard';
 
 import { ListSchema } from '@app/common/packets/case/List';
-import { RegisterSchema } from '@app/common/packets/case/Register';
+// import { RegisterSchema } from '@app/common/packets/case/RegisterCases';
 import { RenewSchema } from '@app/common/packets/case/Renew';
 import { ViewSchema } from '@app/common/packets/case/View';
 import { AuthPipe } from '@app/common/pipes/auth.pipe';
@@ -40,22 +40,22 @@ export class IntakeGateway {
   @Post('/register')
   @UseGuards(SignAuthGuard)
   async register(@Auth(AuthPipe) pUsers: Users, @Body('case') pCases: Cases) {
-    const res = RegisterSchema.validate(pCases);
-    if (!pCases || res.error) {
-      throw new BadRequestException({
-        code: ErrorCodes.BR001,
-      });
-    }
-    pCases.createdBy = pUsers.firstName
-      ? pUsers.lastName
-        ? `${pUsers.firstName} ${pUsers.lastName}`
-        : pUsers.firstName
-      : 'no name';
-    return await lastValueFrom(
-      this.intakeCp
-        .send(CaseMessage.CASE_REGISTER, { requestId: this.cls.get('requestId'), case: pCases })
-        .pipe(timeout(this.appConf.AppsTimeout)),
-    );
+    // const res = RegisterSchema.validate(pCases);
+    // if (!pCases || res.error) {
+    //   throw new BadRequestException({
+    //     code: ErrorCodes.BR001,
+    //   });
+    // }
+    // pCases.createdBy = pUsers.firstName
+    //   ? pUsers.lastName
+    //     ? `${pUsers.firstName} ${pUsers.lastName}`
+    //     : pUsers.firstName
+    //   : 'no name';
+    // return await lastValueFrom(
+    //   this.intakeCp
+    //     .send(CaseMessage.CASE_REGISTER, { requestId: this.cls.get('requestId'), case: pCases })
+    //     .pipe(timeout(this.appConf.AppsTimeout)),
+    // );
   }
 
   @Post('/list')

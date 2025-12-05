@@ -9,10 +9,11 @@ import { CaseResolutionsRepository } from './resolutions/case.resolutions.reposi
 import { CaseAttachesRepository } from './attaches/case.attaches.repository';
 import { CaseAttachesRRepository } from './attachesR/case.attaches.r.repository';
 import { CommonModule } from '@app/common';
-import { MicroservicesModule } from '@app/common/microservices.module';
 import { CasesController } from './cases.controller';
 import { CasesService } from './cases.service';
 import { CasesRepository } from './cases.repository';
+import { ClsModule } from 'nestjs-cls';
+import { nanoid } from 'nanoid';
 
 const controllers = [
   CasesController,
@@ -37,11 +38,21 @@ const repositories = [
 
 
 @Module({
-  imports: [CommonModule, MicroservicesModule],
-  controllers: [...controllers],
+  imports: [CommonModule,
+    ClsModule.forRoot({
+      global: true,
+      middleware: {
+        mount: true,
+        setup: (cls, req) => {
+          cls.set('requestId', nanoid(12));
+        },
+      },
+    }),
+  ],
+  controllers: [CasesController],
   providers: [
     ...services,
-    ...repositories
+    ...repositories,
   ],
 })
 export class CasesModule { }

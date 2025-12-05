@@ -7,7 +7,7 @@ import { Logger } from '../utils/logger';
 
 @Injectable()
 export class GlIntc implements NestInterceptor {
-  constructor(private logger: Logger, private cls: ClsService) {}
+  constructor(private logger: Logger, private cls: ClsService) { }
   intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
     const [req, res] = context.getArgs();
     const now = Date.now();
@@ -34,8 +34,8 @@ export class GlIntc implements NestInterceptor {
         const code = err.response?.code
           ? err.response.code
           : err.message === 'Timeout has occurred'
-          ? ErrorCodes.IS999
-          : ErrorCodes.UK999;
+            ? ErrorCodes.IS999
+            : ErrorCodes.UK999;
         const message = err.message || 'Unknown error';
         const cause = err.response?.cause || null;
         const params = [

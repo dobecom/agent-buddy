@@ -33,12 +33,12 @@ const CASE_SERVICE_PROXY = {
     if (!mq) {
       throw new Error('MQ configuration is not defined');
     }
-    
+
     return ClientProxyFactory.create({
       transport: Transport.RMQ,
       options: {
         urls: [`amqp://${mq.user}:${mq.password}@${mq.host}:${mq.port}`],
-        queue: 'biz',
+        queue: 'case',
         noAck: true,
         queueOptions: {
           durable: true,

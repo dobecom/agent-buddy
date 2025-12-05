@@ -8,7 +8,7 @@ export class RedisProvider implements RedisOptionsFactory {
   constructor(
     @Inject(cacheConfig.KEY)
     private config: ConfigType<typeof cacheConfig>,
-  ) {}
+  ) { }
 
   createRedisOptions(): RedisModuleOptions {
     return {

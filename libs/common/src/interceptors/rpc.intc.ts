@@ -13,16 +13,15 @@ import { Logger } from '../utils/logger';
 
 @Injectable()
 export class RpcExceptionInterceptor implements NestInterceptor {
-  constructor(private logger: Logger, private cls: ClsService) {}
+  constructor(private logger: Logger, private cls: ClsService) { }
   intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
     if (context.getType() === 'rpc') {
       return next.handle().pipe(
         catchError((error) => {
           this.logger.msg(
-            null,
+            '',
             [
-              `ErrName : (${context.getClass().name.split('Controller')[0]}) ${
-                error.response?.code ? error.response.code + '-' : ''
+              `ErrName : (${context.getClass().name.split('Controller')[0]}) ${error.response?.code ? error.response.code + '-' : ''
               }${error.name}`,
             ],
             `REQUEST_ID-${this.cls.get('requestId')}`,
@@ -39,6 +38,8 @@ export class RpcExceptionInterceptor implements NestInterceptor {
           }
         }),
       );
+    } else {
+      return next.handle();
     }
   }
 }

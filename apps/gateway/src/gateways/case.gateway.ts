@@ -6,7 +6,7 @@ import { Users } from '@app/common/domains/Users';
 import { SignAuthGuard } from '@app/common/guards/sign.auth.guard';
 
 import { ListSchema } from '@app/common/packets/case/List';
-import { RegisterSchema } from '@app/common/packets/case/Register';
+import { RegisterCasesSchema } from '@app/common/packets/case/RegisterCases';
 import { RenewSchema } from '@app/common/packets/case/Renew';
 import { ViewSchema } from '@app/common/packets/case/View';
 import { AuthPipe } from '@app/common/pipes/auth.pipe';
@@ -16,9 +16,6 @@ import {
   BadRequestException,
   Body,
   Controller,
-  ForbiddenException,
-  HttpCode,
-  HttpStatus,
   Inject,
   Post,
   UseGuards,
@@ -28,40 +25,44 @@ import { ClientProxy } from '@nestjs/microservices';
 import { ClsService } from 'nestjs-cls';
 import { lastValueFrom, timeout } from 'rxjs';
 
-@Controller('case')
+@Controller('cases')
 export class CaseGateway {
   constructor(
-    @Inject('CASE_SERVICE') private bizCp: ClientProxy,
+    @Inject('CASE_SERVICE') private caseCp: ClientProxy,
     @Inject(appConfig.KEY)
     private appConf: ConfigType<typeof appConfig>,
     private cls: ClsService,
-  ) {}
+  ) { }
 
   /* Admin - Cases ************************************************/
   @Post('/register')
-  @UseGuards(SignAuthGuard)
-  async register(@Auth(AuthPipe) pUsers: Users, @Body('case') pCases: Cases) {
-    const res = RegisterSchema.validate(pCases);
-    if (!pCases || res.error) {
+  // @UseGuards(SignAuthGuard)
+  async register(
+    // @Auth(AuthPipe) pUsers: Users, 
+    @Body('cases') pCases: Cases,
+    // @Body('caseStatements') pCaseStatements: CaseStatements
+  ) {
+    const casesRes = RegisterCasesSchema.validate(pCases);
+    if (!pCases || casesRes.error) {
       throw new BadRequestException({
         code: ErrorCodes.BR001,
       });
     }
-    pCases.createdBy = pUsers.firstName
-      ? pUsers.lastName
-        ? `${pUsers.firstName} ${pUsers.lastName}`
-        : pUsers.firstName
-      : 'no name';
+    // pCases.createdBy = pUsers.firstName
+    //   ? pUsers.lastName
+    //     ? `${pUsers.firstName} ${pUsers.lastName}`
+    //     : pUsers.firstName
+    //   : 'no name';
     return await lastValueFrom(
-      this.bizCp
-        .send(CaseMessage.CASE_REGISTER, { requestId: this.cls.get('requestId'), case: pCases })
+      this.caseCp
+        .send(CaseMessage.CASE_REGISTER, { requestId: this.cls.get('requestId'), cases: pCases })
         .pipe(timeout(this.appConf.AppsTimeout)),
     );
   }
 
   @Post('/list')
   @UseGuards(SignAuthGuard)
-  async listCase(@Auth(AuthPipe) pUsers: Users, @Body('case') pCases: Cases) {
+  async listCase(@Auth(AuthPipe) pUsers: Users, @Body('cases') pCases: Cases) {
     const res = ListSchema.validate(pCases);
     if (!pCases || res.error) {
       throw new BadRequestException({
@@ -69,15 +70,15 @@ export class CaseGateway {
       });
     }
     return await lastValueFrom(
-      this.bizCp
-        .send(CaseMessage.CASE_LIST, { requestId: this.cls.get('requestId'), case: pCases, members: pUsers })
+      this.caseCp
+        .send(CaseMessage.CASE_LIST, { requestId: this.cls.get('requestId'), cases: pCases, members: pUsers })
         .pipe(timeout(this.appConf.AppsTimeout)),
     );
   }
 
   @Post('/view')
   @UseGuards(SignAuthGuard)
-  async viewAdm(@Auth(AuthPipe) pUsers: Users, @Body('case') pCases: Cases) {
+  async viewAdm(@Auth(AuthPipe) pUsers: Users, @Body('cases') pCases: Cases) {
     const res = ViewSchema.validate(pCases);
     if (!pCases || res.error) {
       throw new BadRequestException({
@@ -85,15 +86,15 @@ export class CaseGateway {
       });
     }
     return await lastValueFrom(
-      this.bizCp
-        .send(CaseMessage.CASE_VIEW, { requestId: this.cls.get('requestId'), case: pCases })
+      this.caseCp
+        .send(CaseMessage.CASE_VIEW, { requestId: this.cls.get('requestId'), cases: pCases })
         .pipe(timeout(this.appConf.AppsTimeout)),
     );
   }
 
   @Post('/renew')
   @UseGuards(SignAuthGuard)
-  async renew(@Auth(AuthPipe) pUsers: Users, @Body('case') pCases: Cases) {
+  async renew(@Auth(AuthPipe) pUsers: Users, @Body('cases') pCases: Cases) {
     const res = RenewSchema.validate(pCases);
     if (!pCases || res.error) {
       throw new BadRequestException({
@@ -106,15 +107,15 @@ export class CaseGateway {
         : pUsers.firstName
       : 'no name';
     return await lastValueFrom(
-      this.bizCp
-        .send(CaseMessage.CASE_RENEW, { requestId: this.cls.get('requestId'), case: pCases })
+      this.caseCp
+        .send(CaseMessage.CASE_RENEW, { requestId: this.cls.get('requestId'), cases: pCases })
         .pipe(timeout(this.appConf.AppsTimeout)),
     );
   }
 
   // @Post('/erase')
   // @UseGuards(SignAuthGuard)
-  // async erase(@Auth(AuthPipe) pUsers: Users, @Body('case') pCases: Cases) {
+  // async erase(@Auth(AuthPipe) pUsers: Users, @Body('cases') pCases: Cases) {
   //   const res = ViewSchema.validate(pCases);
   //   if (!pCases || res.error) {
   //     throw new BadRequestException({
@@ -127,8 +128,8 @@ export class CaseGateway {
   //       : pUsers.firstName
   //     : 'no name';
   //   return await lastValueFrom(
-  //     this.bizCp
-  //       .send(CaseMessage.CASE_ERASE, { requestId: this.cls.get('requestId'), case: pCases })
+  //     this.caseCp
+  //       .send(CaseMessage.CASE_ERASE, { requestId: this.cls.get('requestId'), cases: pCases })
   //       .pipe(timeout(this.appConf.AppsTimeout)),
   //   );
   // }
@@ -140,5 +141,5 @@ export class CaseGateway {
   // - Nothing
 
   /* Public - Cases ***********************************************/
-  
+
 }

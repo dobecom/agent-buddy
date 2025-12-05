@@ -1,14 +1,14 @@
 import { ClusterModuleOptions, ClusterOptionsFactory } from '@songkeys/nestjs-redis';
 import { Inject, Injectable } from '@nestjs/common';
-import { ConfigType } from '@nestjs/config';
-import cacheConfig from '@/core/configs/cache.config';
+import type { ConfigType } from '@nestjs/config';
+import cacheConfig from '@app/common/configs/cache.config';
 
 @Injectable()
 export class RedisClusterProvider implements ClusterOptionsFactory {
   constructor(
     @Inject(cacheConfig.KEY)
     private config: ConfigType<typeof cacheConfig>,
-  ) {}
+  ) { }
 
   createClusterOptions(): ClusterModuleOptions {
     return {
